@@ -1,0 +1,292 @@
+---
+import '@fontsource/sora/700.css';
+import '@fontsource/sora/800.css';
+import '@fontsource/source-serif-4/400.css';
+import '@fontsource/source-serif-4/600.css';
+import '@fontsource/source-serif-4/400-italic.css';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const current = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title} · Victoria</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <nav class="nav" aria-label="Navegación principal">
+        <a class="brand" href="/" aria-label="Victoria, inicio">
+          <span class="brand-seal" aria-hidden="true"></span>
+          Victoria
+        </a>
+        <div class="nav-links">
+          <a href="/" aria-current={current === '/' ? 'page' : undefined}>Inicio</a>
+          <a
+            href="/blog"
+            aria-current={current.startsWith('/blog') ? 'page' : undefined}>Blog</a
+          >
+          <a href="/#galeria">Galería</a>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <p class="footer-title">Victoria</p>
+        <p class="footer-text">
+          Un espacio calmado en español para atravesar la tristeza paso a paso.
+          <em>Esto pasará también.</em>
+        </p>
+        <p class="footer-meta">
+          <a href="/">Inicio</a> · <a href="/blog">Blog</a> · <a href="/#galeria"
+            >Galería</a
+          >
+        </p>
+      </div>
+    </footer>
+
+    <style is:global>
+      :root {
+        --paper: #faf8fe;
+        --paper-deep: #f3edfd;
+        --ink: #2a1245;
+        --ink-soft: #5d4a7a;
+        --primary: #5b21b6;
+        --deep: #3b1470;
+        --deep-ink: #f5efff;
+        --lilac: #ede9fe;
+        --lilac-2: #ddd0fa;
+        --gold: #c9a227;
+        --line: #e2d8f5;
+        --card: #ffffff;
+        --radius: 16px;
+        --shadow: 0 2px 6px rgba(42, 18, 69, 0.14), 0 14px 34px -12px rgba(59, 20, 112, 0.35);
+        --font-display: 'Sora', system-ui, sans-serif;
+        --font-reading: 'Source Serif 4', Georgia, serif;
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-reading);
+        font-size: 1.125rem;
+        line-height: 1.75;
+        caret-color: var(--primary);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      ::selection {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      :focus-visible {
+        outline: 3px solid var(--gold);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--paper-deep);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--primary);
+        border-radius: 8px;
+        border: 3px solid var(--paper-deep);
+      }
+
+      h1, h2, h3 {
+        font-family: var(--font-display);
+        line-height: 1.12;
+        text-wrap: balance;
+        letter-spacing: -0.02em;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 5.2vw, 3.9rem);
+        font-weight: 800;
+        margin: 2.5rem 0 1rem;
+      }
+
+      h2 {
+        font-size: clamp(1.5rem, 3vw, 2.1rem);
+        font-weight: 700;
+        margin: 3.5rem 0 0.75rem;
+      }
+
+      h3 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin: 2rem 0 0.5rem;
+      }
+
+      p {
+        max-width: 72ch;
+      }
+
+      a {
+        color: var(--primary);
+        text-underline-offset: 0.22em;
+        text-decoration-thickness: 1.5px;
+      }
+
+      a:hover {
+        color: var(--deep);
+      }
+
+      img {
+        display: block;
+        max-width: 100%;
+      }
+
+      .site-header {
+        position: sticky;
+        top: 0;
+        z-index: 20;
+        background: rgba(250, 248, 254, 0.92);
+        backdrop-filter: blur(10px);
+        border-bottom: 1px solid var(--line);
+      }
+
+      .nav {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 0.9rem 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+
+      .brand {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.35rem;
+        color: var(--deep);
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+      }
+
+      .brand-seal {
+        width: 1.1rem;
+        height: 1.1rem;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #8b5cf6, var(--primary) 60%, var(--deep));
+        box-shadow: 0 0 0 3px var(--lilac-2);
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 0.25rem;
+      }
+
+      .nav-links a {
+        font-family: var(--font-display);
+        font-weight: 700;
+        font-size: 0.95rem;
+        color: var(--ink);
+        text-decoration: none;
+        padding: 0.5rem 0.9rem;
+        border-radius: 999px;
+      }
+
+      .nav-links a:hover {
+        background: var(--lilac);
+        color: var(--deep);
+      }
+
+      .nav-links a[aria-current='page'] {
+        background: var(--primary);
+        color: #fff;
+      }
+
+      .site-footer {
+        background: var(--deep);
+        color: var(--deep-ink);
+        margin-top: 5rem;
+      }
+
+      .footer-inner {
+        max-width: 72rem;
+        margin: 0 auto;
+        padding: 3rem 1.5rem 3.5rem;
+      }
+
+      .footer-title {
+        font-family: var(--font-display);
+        font-weight: 800;
+        font-size: 1.5rem;
+        margin: 0 0 0.5rem;
+      }
+
+      .footer-text {
+        margin: 0;
+        max-width: 60ch;
+        color: #d9cdf3;
+      }
+
+      .footer-text em {
+        color: var(--gold);
+      }
+
+      .footer-meta {
+        margin: 1.5rem 0 0;
+        font-size: 0.95rem;
+      }
+
+      .footer-meta a {
+        color: #e7ddfb;
+      }
+
+      @media (max-width: 40rem) {
+        body {
+          font-size: 1.0625rem;
+        }
+        .nav {
+          padding: 0.75rem 1rem;
+        }
+        .nav-links a {
+          padding: 0.45rem 0.7rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+        *, *::before, *::after {
+          animation: none !important;
+          transition: none !important;
+        }
+      }
+    </style>
+  </body>
+</html>

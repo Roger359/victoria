@@ -1,0 +1,34 @@
+# dependencies
+node_modules/
+.opencode/node_modules/
+
+# build output
+dist/
+
+# Astro cache
+.astro/
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# env
+.env
+.env.*
+!.env.example
+
+# previas
+/node
+/.best-practices
+
+# agent tooling (local, no va a GitHub)
+.agent/
+.agents/
+.claude/
+.codex/
+.gemini/
+.opencode/
+.impeccable/
+

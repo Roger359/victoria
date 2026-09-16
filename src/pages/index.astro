@@ -1,0 +1,737 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { posts, gallery } from '../data/site';
+---
+
+<BaseLayout
+  title="Inicio"
+  description="Victoria: un rincón de un padre para su hija, con aprendizajes, métodos y reflexiones que voy leyendo, más blog y galería."
+>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner">
+      <div class="hero-copy">
+        <h1 id="hero-title">Para ti, hija: aquí estoy siempre.</h1>
+        <p class="hero-lede">
+          Este es nuestro rincón. Aquí te comparto lo que voy leyendo y
+          aprendiendo — <strong>ideas, métodos y reflexiones</strong> para
+          acompañarte, apoyarte y recordarte que <em>nunca caminas sola</em>.
+        </p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="/blog"
+            >Leer el blog</a
+          >
+          <a class="btn btn-ghost" href="#galeria">Ver la galería</a>
+        </div>
+        <p class="hero-meta">
+          <span>Un blog de apoyo y aprendizajes</span>
+          <span aria-hidden="true">·</span>
+          <span>Blog + Galería</span>
+          <span aria-hidden="true">·</span>
+          <span>18 fotos locales</span>
+        </p>
+      </div>
+      <div class="hero-plates" aria-label="Collage de fotografías">
+        <figure class="plate plate-main">
+          <img
+            src="/images/IMG-20250927-WA0019.jpg"
+            alt="Fotografía destacada de la comunidad Victoria"
+            loading="eager"
+          />
+        </figure>
+        <figure class="plate plate-top">
+          <img
+            src="/images/IMG-20231111-WA0032.jpg"
+            alt="Fotografía secundaria de la comunidad Victoria"
+            loading="lazy"
+          />
+        </figure>
+        <figure class="plate plate-bottom">
+          <img
+            src="/images/IMG-20240329-WA0023.jpg"
+            alt="Otra fotografía de la comunidad Victoria"
+            loading="lazy"
+          />
+        </figure>
+        <p class="seal" aria-label="Esto pasará también">
+          <em>“Esto pasará también”</em>
+        </p>
+      </div>
+    </div>
+    <svg
+      class="hero-wave"
+      viewBox="0 0 1440 72"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+    >
+      <path
+        d="M0,40 C240,70 480,0 720,26 C960,52 1200,64 1440,30 L1440,72 L0,72 Z"
+      ></path>
+    </svg>
+  </section>
+
+  <section class="section" aria-labelledby="blog-title">
+    <div class="wrap">
+      <h2 id="blog-title">El blog</h2>
+      <p class="section-lede">
+        Lecturas para entender lo que sientes y actuar con serenidad. <em
+          >Empieza por la primera entrada.</em
+        >
+      </p>
+      <div class="cards">
+        {
+          posts.map((p) => (
+            <article class="card">
+              <a
+                class="card-media"
+                href={`/blog/${p.slug}`}
+                aria-label={`Leer: ${p.title}`}
+              >
+                <img src={p.cover} alt={p.coverAlt} loading="lazy" />
+              </a>
+              <div class="card-body">
+                <h3 class="card-title">
+                  <a href={`/blog/${p.slug}`}>{p.title}</a>
+                </h3>
+                <p class="card-excerpt">{p.excerpt}</p>
+                <p class="card-meta">
+                  <time datetime={p.date}>
+                    {new Date(`${p.date}T12:00:00`).toLocaleDateString(
+                      'es-ES',
+                      { day: 'numeric', month: 'long', year: 'numeric' }
+                    )}
+                  </time>
+                  <span aria-hidden="true">·</span>
+                  <span>{p.minutes} min de lectura</span>
+                </p>
+                <a class="card-link" href={`/blog/${p.slug}`}>
+                  Leer entrada
+                  <svg
+                    viewBox="0 0 16 16"
+                    width="14"
+                    height="14"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 8h11M9 3.5 13.5 8 9 12.5"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+        <article class="card card-quiet" aria-label="Próximas entradas">
+          <div class="card-body">
+            <h3 class="card-title">Más entradas en camino</h3>
+            <p class="card-excerpt">
+              Este blog empieza con una entrada. Las siguientes se publicarán
+              aquí, en este mismo menú.
+            </p>
+            <p class="card-meta">Estado: en preparación</p>
+          </div>
+        </article>
+      </div>
+      <p class="section-cta">
+        <a href="/blog">Ver el índice del blog</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-gallery" id="galeria" aria-labelledby="galeria-title">
+    <div class="wrap">
+      <h2 id="galeria-title">Galería</h2>
+      <p class="section-lede">
+        Momentos de la comunidad: <strong
+          >rodéate de gente que te aporte sana compañía</strong
+        > y quédate con lo bueno de cada etapa.
+      </p>
+      <div class="collage">
+        {
+          gallery.map((g, i) => (
+            <figure
+              class={`cell cell-${g.span}`}
+              tabindex="0"
+              data-full={g.src}
+              data-alt={g.alt}
+              title="Pasa el cursor o toca para ampliar"
+            >
+              <img src={g.src} alt={g.alt} loading="lazy" decoding="async" />
+            </figure>
+          ))
+        }
+      </div>
+      <div class="viewer" id="viewer" aria-hidden="true">
+        <div class="viewer-backdrop" data-close></div>
+        <figure class="viewer-figure">
+          <img id="viewer-img" alt="" />
+        </figure>
+        <button class="viewer-close" id="viewer-close" type="button" aria-label="Cerrar vista ampliada">
+          ✕
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const viewer = document.getElementById('viewer');
+    const viewerImg = document.getElementById('viewer-img');
+    const closeBtn = document.getElementById('viewer-close');
+    const cells = Array.from(document.querySelectorAll('.cell'));
+    const canHover = window.matchMedia('(hover: hover)').matches;
+    let hoverTimer = 0;
+    let pinned = false;
+
+    function showImage(src, alt) {
+      if (!src) return;
+      // Si ya está abierto, solo cambia la foto sin re-animar (evita parpadeo al moverte rápido)
+      if (viewerImg.getAttribute('src') !== src) {
+        viewerImg.src = src;
+        viewerImg.alt = alt || '';
+      }
+      if (!viewer.classList.contains('open')) {
+        viewer.classList.add('open');
+        viewer.setAttribute('aria-hidden', 'false');
+      }
+    }
+
+    function openHover(src, alt) {
+      if (pinned) return;
+      viewer.classList.remove('pinned');
+      showImage(src, alt);
+      // En hover NO bloqueamos scroll ni capturamos puntero: evita el loop mouseleave/open
+    }
+
+    function openPinned(src, alt) {
+      pinned = true;
+      viewer.classList.add('pinned');
+      showImage(src, alt);
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeHover() {
+      if (pinned) return;
+      viewer.classList.remove('open');
+      viewer.setAttribute('aria-hidden', 'true');
+      viewerImg.removeAttribute('src');
+    }
+
+    function closeAll() {
+      pinned = false;
+      viewer.classList.remove('pinned');
+      viewer.classList.remove('open');
+      viewer.setAttribute('aria-hidden', 'true');
+      viewerImg.removeAttribute('src');
+      document.body.style.overflow = '';
+    }
+
+    cells.forEach((cell) => {
+      const src = cell.getAttribute('data-full');
+      const alt = cell.getAttribute('data-alt') || cell.querySelector('img')?.alt || '';
+
+      if (canHover) {
+        cell.addEventListener('mouseenter', () => {
+          if (pinned) return;
+          window.clearTimeout(hoverTimer);
+          hoverTimer = window.setTimeout(() => openHover(src, alt), 160);
+        });
+        cell.addEventListener('mouseleave', () => {
+          window.clearTimeout(hoverTimer);
+          // Pequeño retardo para no cerrar si solo cruzaste 1px entre celdas
+          window.setTimeout(() => {
+            if (!pinned && !document.querySelector('.cell:hover')) closeHover();
+          }, 60);
+        });
+      }
+
+      cell.addEventListener('click', () => {
+        window.clearTimeout(hoverTimer);
+        openPinned(src, alt);
+      });
+
+      cell.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openPinned(src, alt);
+        }
+      });
+    });
+
+    viewer.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t.closest('[data-close]') || t.closest('#viewer-close')) {
+        closeAll();
+      }
+    });
+
+    closeBtn.addEventListener('click', closeAll);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        window.clearTimeout(hoverTimer);
+        closeAll();
+      }
+    });
+  </script>
+
+  <style>
+    .hero {
+      background: linear-gradient(160deg, #3b1470 0%, #5b21b6 58%, #7c3aed 100%);
+      color: #f5efff;
+      position: relative;
+    }
+
+    .hero-inner {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 4.5rem 1.5rem 6.5rem;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    .hero-copy h1 {
+      margin-top: 0;
+      color: #fff;
+      max-width: 14ch;
+    }
+
+    .hero-lede {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: #e7ddfb;
+      max-width: 52ch;
+    }
+
+    .hero-lede strong {
+      color: #fff;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1rem;
+      text-decoration: none;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
+      display: inline-block;
+      transition: transform 0.25s cubic-bezier(0.16, 0.84, 0.3, 1), box-shadow 0.25s ease,
+        background 0.2s ease;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn-primary {
+      background: #fff;
+      color: var(--deep);
+      box-shadow: 0 2px 6px rgba(20, 8, 40, 0.35), 0 14px 30px -10px rgba(20, 8, 40, 0.55);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold);
+      color: #241040;
+    }
+
+    .btn-ghost {
+      border: 2px solid rgba(255, 255, 255, 0.65);
+      color: #fff;
+    }
+
+    .btn-ghost:hover {
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    .hero-meta {
+      margin-top: 1.75rem;
+      font-size: 0.92rem;
+      color: #cdbcf0;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-plates {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 1rem;
+      animation: rise 0.9s cubic-bezier(0.16, 0.84, 0.3, 1) both;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 0.001;
+        transform: translateY(26px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .plate {
+      margin: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: 0 2px 6px rgba(20, 8, 40, 0.4), 0 18px 40px -12px rgba(20, 8, 40, 0.6);
+    }
+
+    .plate img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .plate-main {
+      grid-row: 1 / span 2;
+      border-radius: 999px 999px var(--radius) var(--radius);
+      min-height: 26rem;
+    }
+
+    .plate-top,
+    .plate-bottom {
+      min-height: 12.5rem;
+    }
+
+    .seal {
+      position: absolute;
+      left: -1rem;
+      bottom: 1.5rem;
+      margin: 0;
+      background: var(--gold);
+      color: #241040;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.7rem 1.2rem;
+      border-radius: 999px;
+      box-shadow: 0 2px 6px rgba(20, 8, 40, 0.4), 0 12px 26px -8px rgba(20, 8, 40, 0.55);
+      transform: rotate(-4deg);
+    }
+
+    .seal em {
+      font-style: italic;
+    }
+
+    .hero-wave {
+      display: block;
+      width: 100%;
+      height: 60px;
+      margin-bottom: -1px;
+    }
+
+    .hero-wave path {
+      fill: var(--paper);
+    }
+
+    .section {
+      padding: 4rem 0 0.5rem;
+    }
+
+    .wrap {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    .section-lede {
+      font-size: 1.2rem;
+      color: var(--ink-soft);
+      max-width: 62ch;
+      margin-top: 0;
+    }
+
+    .section-lede strong {
+      color: var(--primary);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+      gap: 1.75rem;
+      margin-top: 2.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s cubic-bezier(0.16, 0.84, 0.3, 1), box-shadow 0.25s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card:active {
+      transform: scale(0.99);
+    }
+
+    .card-media {
+      display: block;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--lilac);
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.3, 1);
+    }
+
+    .card:hover .card-media img {
+      transform: scale(1.04);
+    }
+
+    .card-body {
+      padding: 1.5rem 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .card-title a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .card-title a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    .card-excerpt {
+      margin: 0;
+      color: var(--ink-soft);
+      font-size: 1.02rem;
+    }
+
+    .card-meta {
+      margin: 0.25rem 0 0;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card-link {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.98rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+    }
+
+    .card-quiet {
+      background: var(--paper-deep);
+      border-style: dashed;
+      box-shadow: none;
+    }
+
+    .section-cta {
+      margin-top: 1.75rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+
+    .section-gallery {
+      padding-bottom: 1rem;
+    }
+
+    .collage {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-auto-rows: 11rem;
+      grid-auto-flow: dense;
+      gap: 0.9rem;
+      margin-top: 2.25rem;
+    }
+
+    .cell {
+      margin: 0;
+      overflow: hidden;
+      border-radius: var(--radius);
+      background: var(--lilac);
+      box-shadow: 0 2px 6px rgba(42, 18, 69, 0.12), 0 10px 24px -14px rgba(59, 20, 112, 0.4);
+      position: relative;
+      isolation: isolate;
+      cursor: zoom-in;
+      transition: transform 0.3s cubic-bezier(0.16, 0.84, 0.3, 1), box-shadow 0.3s ease;
+    }
+
+    .cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.5s cubic-bezier(0.16, 0.84, 0.3, 1);
+      pointer-events: none;
+    }
+
+    .cell:hover,
+    .cell:focus-visible {
+      z-index: 2;
+      box-shadow: 0 8px 24px rgba(42, 18, 69, 0.22), 0 20px 44px -12px rgba(59, 20, 112, 0.5);
+      outline: 3px solid var(--gold);
+      outline-offset: 3px;
+    }
+
+    .cell:hover img {
+      transform: scale(1.04);
+    }
+
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4vmin;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+      /* Clave anti-glitch: en hover no intercepta el puntero, así no se dispara mouseleave */
+      pointer-events: none;
+    }
+
+    .viewer.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .viewer.pinned {
+      pointer-events: auto;
+    }
+
+    .viewer.pinned .viewer-close {
+      display: block;
+    }
+
+    .viewer-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(24, 10, 44, 0.78);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+
+    .viewer-figure {
+      position: relative;
+      margin: 0;
+      max-width: min(88vw, 64rem);
+      max-height: 86vh;
+    }
+
+    .viewer.open .viewer-figure {
+      animation: viewer-in 0.3s cubic-bezier(0.16, 0.84, 0.3, 1);
+    }
+
+    @keyframes viewer-in {
+      from {
+        opacity: 0.001;
+        transform: scale(0.96) translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .viewer-figure img {
+      display: block;
+      width: auto;
+      height: auto;
+      max-width: min(88vw, 64rem);
+      max-height: 86vh;
+      object-fit: contain;
+      border-radius: 18px;
+      box-shadow: 0 24px 80px -12px rgba(0, 0, 0, 0.65);
+      background: transparent;
+    }
+
+    .viewer-figure img[src=''] {
+      display: none;
+    }
+
+    .viewer-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 2.75rem;
+      height: 2.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.12);
+      color: #fff;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      display: none;
+    }
+
+    .viewer-close:hover {
+      background: rgba(255, 255, 255, 0.24);
+      transform: scale(1.05);
+    }
+
+    .cell-tall {
+      grid-row: span 2;
+    }
+
+    .cell-wide {
+      grid-column: span 2;
+    }
+
+    @media (max-width: 56rem) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        padding-top: 3rem;
+      }
+      .plate-main {
+        min-height: 20rem;
+      }
+      .collage {
+        grid-template-columns: repeat(2, 1fr);
+        grid-auto-rows: 10rem;
+      }
+    }
+
+    @media (max-width: 30rem) {
+      .seal {
+        left: 0.5rem;
+      }
+    }
+  </style>
+</BaseLayout>

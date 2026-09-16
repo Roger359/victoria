@@ -1,0 +1,166 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { posts } from '../../data/site';
+---
+
+<BaseLayout
+  title="Blog"
+  description="Índice del blog de Victoria: entradas en español para atravesar la tristeza paso a paso."
+>
+  <div class="wrap">
+    <h1>Blog</h1>
+    <p class="lede">
+      Todas las entradas, en un solo lugar. <em
+        >Empieza por la primera: casi cualquier problema tendrá una solución.</em
+      >
+    </p>
+    <div class="cards">
+      {
+        posts.map((p) => (
+          <article class="card">
+            <a
+              class="card-media"
+              href={`/blog/${p.slug}`}
+              aria-label={`Leer: ${p.title}`}
+            >
+              <img src={p.cover} alt={p.coverAlt} loading="lazy" />
+            </a>
+            <div class="card-body">
+              <h2 class="card-title">
+                <a href={`/blog/${p.slug}`}>{p.title}</a>
+              </h2>
+              <p class="card-excerpt">{p.excerpt}</p>
+              <p class="card-meta">
+                <time datetime={p.date}>
+                  {new Date(`${p.date}T12:00:00`).toLocaleDateString('es-ES', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                  })}
+                </time>
+                <span aria-hidden="true"> · </span>
+                <span>{p.minutes} min de lectura</span>
+              </p>
+              <a class="card-link" href={`/blog/${p.slug}`}>
+                Leer entrada
+                <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
+                  <path
+                    d="M2 8h11M9 3.5 13.5 8 9 12.5"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+    <p class="back"><a href="/">← Volver al inicio</a></p>
+  </div>
+
+  <style>
+    .wrap {
+      max-width: 72rem;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 1rem;
+    }
+
+    .lede {
+      font-size: 1.2rem;
+      color: var(--ink-soft);
+      max-width: 62ch;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+      gap: 1.75rem;
+      margin-top: 2.25rem;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.25s cubic-bezier(0.16, 0.84, 0.3, 1);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-media {
+      display: block;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--lilac);
+    }
+
+    .card-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body {
+      padding: 1.5rem 1.5rem 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+
+    .card-title {
+      font-size: 1.4rem;
+      margin: 0;
+    }
+
+    .card-title a {
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .card-title a:hover {
+      color: var(--primary);
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+    }
+
+    .card-excerpt {
+      margin: 0;
+      color: var(--ink-soft);
+    }
+
+    .card-meta {
+      margin: 0.25rem 0 0;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .card-link {
+      margin-top: auto;
+      padding-top: 0.75rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      text-decoration: none;
+    }
+
+    .back {
+      margin-top: 2.5rem;
+      font-family: var(--font-display);
+      font-weight: 700;
+    }
+  </style>
+</BaseLayout>

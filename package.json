@@ -1,0 +1,19 @@
+{
+  "name": "victoria",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@fontsource/sora": "^5.2.5",
+    "@fontsource/source-serif-4": "^5.2.5",
+    "astro": "^7.3.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3"
+  }
+}
