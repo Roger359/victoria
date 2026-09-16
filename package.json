@@ -6,7 +6,11 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "start": "astro preview --host 0.0.0.0 --port ${PORT:-3000}"
+  },
+  "engines": {
+    "node": ">=20 <23"
   },
   "dependencies": {
     "@fontsource/sora": "^5.2.5",
